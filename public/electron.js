@@ -8,6 +8,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
+    width: 480,
+    height: 320,
     fullscreen: true,
   });
   mainWindow.loadURL(
