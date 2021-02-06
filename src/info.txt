@@ -1,1 +1,64 @@
 https://codemyui.com/animated-weather-icons-in-css/
+
+
+const appDataDebug: AppState = {
+  locations: [
+    {
+      id: '0',
+      name: 'Home',
+      measurements: [
+        {
+          id: 'm1',
+          name: 'Temperature',
+          value: 24.1,
+          minValue: 10.1,
+          maxValue: 30.0,
+          unit: 'ºC',
+          time: moment(),
+        },
+        {
+          id: 'm2',
+          name: 'Humidity',
+          value: 80.1,
+          minValue: 50.1,
+          maxValue: 90.0,
+          unit: '%',
+          time: moment(),
+        },
+      ],
+    },
+    {
+      id: '1',
+      name: 'Out',
+      measurements: [
+        {
+          id: 'm1',
+          name: 'Temperature',
+          value: 4.1,
+          minValue: 0.1,
+          maxValue: 0.0,
+          unit: 'ºC',
+          time: moment(),
+        },
+        {
+          id: 'm2',
+          name: 'Humidity',
+          value: 40.1,
+          minValue: 30.1,
+          maxValue: 60.0,
+          unit: '%',
+          time: moment(),
+        },
+        {
+          id: 'm3',
+          name: 'Pressure',
+          value: 999.1,
+          minValue: 1000.1,
+          maxValue: 1111.0,
+          unit: 'hPa',
+          time: moment(),
+        },
+      ],
+    },
+  ],
+};

@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { AppStateProvider } from './AppStateContext';
+//import App from './App';
+import { MqttReceiver } from './MqttReceiver';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppStateProvider>
+      <MqttReceiver />
+    </AppStateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

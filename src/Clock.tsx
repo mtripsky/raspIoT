@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ClockContainer } from './styles';
 
 interface PropsHour {
   hours: number;
@@ -106,7 +107,7 @@ const Clock: React.FC = () => {
   }, []);
 
   return (
-    <div className='clock'>
+    <ClockContainer>
       <Formatter
         format={'h:m:s p'}
         hours={currentTime.getHours()}
@@ -115,7 +116,7 @@ const Clock: React.FC = () => {
         twelveHours={true}
         separator={':'}
       />
-    </div>
+    </ClockContainer>
   );
 };
 
