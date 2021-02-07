@@ -1,9 +1,22 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-import { AppState, Measurement, MeasurementMessage } from './redux/types';
+import moment from 'moment';
+import mqtt from 'mqtt';
+import {
+  AppState,
+  Measurement,
+  MeasurementMessage,
+  Error,
+  Client,
+} from './redux/types';
+import { stat } from 'fs';
+import receiver from './mqtt/MqttReceiver';
 
 const appDataEmpty: AppState = {
   locations: [],
+  mqttClient: { client: null, status: 'offline' },
+  error: null,
+  currentTime: new Date(),
 };
 
 interface AppStateContextProps {
@@ -18,24 +31,36 @@ export const useAppState = () => {
   return useContext(AppStateContext);
 };
 
-type Action = {
-  type: 'NEW_MEASUREMENT_MESSAGE';
-  payload: MeasurementMessage;
-};
+type Action =
+  | {
+      type: 'NEW_MEASUREMENT_MESSAGE';
+      payload: MeasurementMessage;
+    }
+  | {
+      type: 'MQTT_ONLINE';
+    }
+  | {
+      type: 'MQTT_CONNECTED';
+      payload: Error;
+    }
+  | {
+      type: 'UPDATE_CURRENT_APPLICATION_TIME';
+      payload: Date;
+    };
 
 function GetDailyExtremes(
   oldMeasurement: Measurement,
   payload: MeasurementMessage
 ) {
-  console.log(`oldtime: ${oldMeasurement.time}`);
-  console.log(`newtime: ${payload.time}`);
-  /*
-  if (payload.time.diff(oldMeasurement.time, 'day') >= 1) {
+  const newTime = new Date(payload.time);
+  const dayDiff = newTime.getDay() - oldMeasurement.time.getDay();
+
+  if (dayDiff >= 1) {
     return {
       min: payload.value,
       max: payload.value,
     };
-  }*/
+  }
 
   return {
     min:
@@ -51,8 +76,19 @@ function GetDailyExtremes(
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
+    case 'UPDATE_CURRENT_APPLICATION_TIME': {
+      state.currentTime = action.payload;
+      return {
+        ...state,
+      };
+    }
+    case 'MQTT_ONLINE': {
+      state.mqttClient.status = 'online';
+      return {
+        ...state,
+      };
+    }
     case 'NEW_MEASUREMENT_MESSAGE': {
-      console.log('NEW_MEASUREMENT_MESSAGE');
       const indLoc = state.locations.findIndex(
         (l) => l.name === action.payload.location
       );
@@ -71,14 +107,12 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
           unit: action.payload.unit,
           minValue: action.payload.value,
           maxValue: action.payload.value,
-          time: action.payload.time,
+          time: new Date(action.payload.time),
         });
       } else {
         const indMeasurement = state.locations[indLoc].measurements.findIndex(
           (m) => m.name === action.payload.type
         );
-        console.log(state);
-        console.log(indMeasurement);
 
         if (indMeasurement === -1) {
           state.locations[indLoc].measurements.push({
@@ -88,15 +122,17 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
             unit: action.payload.unit,
             minValue: action.payload.value,
             maxValue: action.payload.value,
-            time: action.payload.time,
+            time: new Date(action.payload.time),
           });
         } else {
           const dailyExtremes = GetDailyExtremes(
             state.locations[indLoc].measurements[indMeasurement],
             action.payload
           );
-          state.locations[indLoc].measurements[indMeasurement].time =
-            action.payload.time;
+          state.locations[indLoc].measurements[indMeasurement].id = uuid();
+          state.locations[indLoc].measurements[indMeasurement].time = new Date(
+            action.payload.time
+          );
           state.locations[indLoc].measurements[indMeasurement].value =
             action.payload.value;
           state.locations[indLoc].measurements[indMeasurement].minValue =
@@ -116,8 +152,32 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
   }
 };
 
+const mqttConnectionOptions: mqtt.IClientOptions = {
+  protocol: 'ws',
+  port: 8883,
+  host: 'location.host',
+};
+
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useReducer(appStateReducer, appDataEmpty);
+
+  useEffect(() => {
+    state.mqttClient.client = receiver.connect(mqttConnectionOptions, () => {
+      dispatch({ type: 'MQTT_ONLINE' });
+    });
+    receiver.subscribe('/home/living-room/#', { qos: 1 });
+    receiver.registerCallbackOnMessage((topic: string, message: Buffer) => {
+      dispatch({
+        type: 'NEW_MEASUREMENT_MESSAGE',
+        payload: JSON.parse(message.toString()),
+      });
+    });
+    receiver.registerCallbackOnDisconnected(() => {});
+
+    return function cleanup() {
+      state.mqttClient.client = receiver.disconnect();
+    };
+  }, []);
 
   return (
     <AppStateContext.Provider value={{ state, dispatch }}>

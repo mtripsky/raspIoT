@@ -4,8 +4,10 @@ import {
   MeasurementValue,
   MeasurementCardContainer,
   MeasurementExtremes,
+  MeasurementTimeLastUpdate,
 } from '../styles';
 import { roundToOne } from '../utils/Calculator';
+import { useAppState } from '../AppStateContext';
 
 interface MeasurementProps {
   name: string;
@@ -13,7 +15,10 @@ interface MeasurementProps {
   unit: string;
   minValue: number;
   maxValue: number;
+  measurementTime: Date;
 }
+
+const rtf = new Intl.RelativeTimeFormat('en', { style: 'long' });
 
 export const MeasurementCard = ({
   name,
@@ -21,7 +26,13 @@ export const MeasurementCard = ({
   unit,
   minValue,
   maxValue,
+  measurementTime,
 }: MeasurementProps) => {
+  const { state, dispatch } = useAppState();
+  const timeDiffSeconds = Math.ceil(
+    (measurementTime.getTime() - state.currentTime.getTime()) / 1000
+  );
+
   return (
     <MeasurementCardContainer>
       <MeasurementTitle>{name}</MeasurementTitle>
@@ -29,12 +40,15 @@ export const MeasurementCard = ({
         {roundToOne(value)}
         {unit}
       </MeasurementValue>
+      <MeasurementTimeLastUpdate>
+        (Last update {rtf.format(timeDiffSeconds, 'second')})
+      </MeasurementTimeLastUpdate>
       <MeasurementExtremes>
-        MIN: {roundToOne(minValue)}
+        min: {roundToOne(minValue)}
         {unit}
       </MeasurementExtremes>
       <MeasurementExtremes>
-        MAX: {roundToOne(maxValue)}
+        max: {roundToOne(maxValue)}
         {unit}
       </MeasurementExtremes>
     </MeasurementCardContainer>

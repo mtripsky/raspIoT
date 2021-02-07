@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppState } from './AppStateContext';
 
 import mqtt from 'mqtt';
@@ -46,11 +46,18 @@ let disconnectFce = function disconnect(client: mqtt.Client) {
 
 export const MqttReceiver = () => {
   const { state, dispatch } = useAppState();
-
+  //const calledOnce = React.useRef(false);
   const client = mqtt.connect(mqttConnectionOptions);
-
+  //const [count, setCount] = useState(0);
+  console.log('HERE');
   useEffect(() => {
+    //if (calledOnce.current) {
+    //return;
+    //}
+
     if (client) {
+      //console.log(`count: ${count}`);
+      //setCount(count + 1);
       //console.log('here');
       client.on('connect', () => {
         // console.log('connected');
@@ -60,20 +67,23 @@ export const MqttReceiver = () => {
         console.log(`Error occurred in Receiver. ERROR: ${err}.`);
       });
       //client.subscribe(topics);
-      client.subscribe('#');
+      client.subscribe('#', { qos: 1 });
       client.on('message', (topic, message) => {
-        console.log(`new message ${topic}`);
+        console.log('new message');
+        //console.log(`new message ${topic}, count: ${count}`);
         dispatch({
           type: 'NEW_MEASUREMENT_MESSAGE',
           payload: JSON.parse(message.toString()),
         });
+        //setCount(count + 1);
         // FIX ME: now we take any message on any topic
         //callback(JSON.parse(message.toString()));
       });
+      // calledOnce.current = true;
     } else {
       console.log('not connected');
     }
-  }, [client, dispatch]);
+  }, [client]);
 
   return <App />;
 };

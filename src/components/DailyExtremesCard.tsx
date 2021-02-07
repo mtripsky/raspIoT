@@ -16,11 +16,11 @@ export const DailyExtremesCard = ({
   return (
     <MeasurementCardContainer>
       <MeasurementExtremes>
-        MIN: {roundToOne(minValue)}
+        min: {roundToOne(minValue)}
         {unit}
       </MeasurementExtremes>
       <MeasurementExtremes>
-        MAX: {roundToOne(maxValue)}
+        max: {roundToOne(maxValue)}
         {unit}
       </MeasurementExtremes>
     </MeasurementCardContainer>

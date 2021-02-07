@@ -4,13 +4,14 @@ import './index.css';
 import { AppStateProvider } from './AppStateContext';
 //import App from './App';
 import { MqttReceiver } from './MqttReceiver';
+import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
     <AppStateProvider>
-      <MqttReceiver />
+      <App />
     </AppStateProvider>
   </React.StrictMode>,
   document.getElementById('root')

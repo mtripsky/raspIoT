@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { ClockContainer } from './styles';
+import React, { useEffect } from 'react';
+import { useAppState } from '../AppStateContext';
+import { ClockContainer } from '../styles';
 
 interface PropsHour {
   hours: number;
@@ -94,11 +95,15 @@ function Formatter(props: Props) {
 }
 
 const Clock: React.FC = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  //const [currentTime, setCurrentTime] = useState(new Date());
+  const { state, dispatch } = useAppState();
 
   useEffect(() => {
     var interval = setInterval(function () {
-      setCurrentTime(new Date());
+      dispatch({
+        type: 'UPDATE_CURRENT_APPLICATION_TIME',
+        payload: new Date(),
+      });
     }, 500);
 
     return function cleanup() {
@@ -110,9 +115,9 @@ const Clock: React.FC = () => {
     <ClockContainer>
       <Formatter
         format={'h:m:s p'}
-        hours={currentTime.getHours()}
-        minutes={currentTime.getMinutes()}
-        seconds={currentTime.getSeconds()}
+        hours={state.currentTime.getHours()}
+        minutes={state.currentTime.getMinutes()}
+        seconds={state.currentTime.getSeconds()}
         twelveHours={true}
         separator={':'}
       />

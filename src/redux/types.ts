@@ -1,3 +1,5 @@
+import { MqttClient } from 'mqtt';
+
 const moment = require('moment');
 
 export interface Measurement {
@@ -7,7 +9,11 @@ export interface Measurement {
   minValue: number;
   maxValue: number;
   unit: string;
-  time: moment.Moment;
+  time: Date;
+}
+
+export interface ApplicationSettings {
+  backgroundcolor: string;
 }
 
 export interface Location {
@@ -16,8 +22,15 @@ export interface Location {
   measurements: Measurement[];
 }
 
+export interface Client {
+  client: any;
+  status: string;
+}
 export interface AppState {
   locations: Location[];
+  mqttClient: Client;
+  error?: Error | null;
+  currentTime: Date;
 }
 
 export interface MeasurementMessage {
@@ -26,6 +39,10 @@ export interface MeasurementMessage {
   value: number;
   unit: string;
   location: string;
-  time: moment.Moment;
+  time: string;
   timestamp: number;
+}
+
+export interface Error {
+  text: string;
 }

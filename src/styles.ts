@@ -1,8 +1,25 @@
 import styled from 'styled-components';
 
+// 8. Pink & blue
+const defaultColor = '#2f3c7e';
+const defaultBackground = '#fbeaeb';
+
 export const AppContainer = styled.div``;
 
-export const Grid = styled.div``;
+interface GridProps {
+  backgroundcolor?: string;
+  textcolor?: string;
+}
+interface ButtonProps {
+  backgroundcolor?: string;
+  textcolor?: string;
+}
+
+export const Grid = styled.div<GridProps>`
+  background: ${(props) =>
+    props.backgroundcolor ? props.backgroundcolor : defaultBackground};
+  color: ${(props) => (props.textcolor ? props.textcolor : defaultColor)};
+`;
 
 interface ColumnProps {
   size?: number;
@@ -17,30 +34,46 @@ export const Row = styled.div`
   display: flex;
 `;
 
-export const ClockContainer = styled.div`
-  background: red;
-  text-align: center;
-  font-size: 150%;
+export const SettingsButton = styled.button<ButtonProps>`
+  background: ${(props) =>
+    props.backgroundcolor ? props.backgroundcolor : defaultBackground};
+  color: ${(props) => (props.textcolor ? props.textcolor : defaultColor)};
+  padding: 0;
+  border: none;
 `;
 
+export const ClockContainer = styled.div<GridProps>`
+  text-align: center;
+  font-size: 150%;
+  padding: 50px 0px 20px 0px;
+`;
+
+export const LocationContainer = styled.div`
+  align: center;
+  padding: 10px 0px 10px 0px;
+`;
 export const MeasurementCardContainer = styled.div`
-  background: azure;
   text-align: center;
 `;
 
 export const MeasurementTitle = styled.div`
   vertical-align: text-center;
-  padding: 6px 10px 12px 10px;
+  padding: 6px 10px 10px 10px;
   font-weight: bold;
   font-size: 200%;
 `;
 
+export const MeasurementTimeLastUpdate = styled.div`
+  vertical-align: text-center;
+  font-size: 100%;
+`;
+
 export const MeasurementValue = styled.div`
-  font-size: 400%;
-  padding: 10px 0px 10px 0px;
+  font-size: 410%;
+  padding: 0px 0px 0px 0px;
 `;
 
 export const MeasurementExtremes = styled.div`
-  font-size: 200%;
-  padding: 10px 0px 10 0px;
+  font-size: 210%;
+  padding: 5px 0px 0px 0px;
 `;
