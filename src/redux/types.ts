@@ -1,7 +1,3 @@
-import { MqttClient } from 'mqtt';
-
-const moment = require('moment');
-
 export interface Measurement {
   id: string;
   name: string;

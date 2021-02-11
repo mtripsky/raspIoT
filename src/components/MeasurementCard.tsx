@@ -7,7 +7,7 @@ import {
   MeasurementTimeLastUpdate,
 } from '../styles';
 import { roundToOne } from '../utils/Calculator';
-import { useAppState } from '../AppStateContext';
+import { useAppState } from '../redux/store';
 
 interface MeasurementProps {
   name: string;
@@ -28,7 +28,7 @@ export const MeasurementCard = ({
   maxValue,
   measurementTime,
 }: MeasurementProps) => {
-  const { state, dispatch } = useAppState();
+  const { state } = useAppState();
   const timeDiffSeconds = Math.ceil(
     (measurementTime.getTime() - state.currentTime.getTime()) / 1000
   );

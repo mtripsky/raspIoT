@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppState } from '../AppStateContext';
+import { useAppState } from '../redux/store';
 import { ClockContainer } from '../styles';
 
 interface PropsHour {
@@ -95,7 +95,6 @@ function Formatter(props: Props) {
 }
 
 const Clock: React.FC = () => {
-  //const [currentTime, setCurrentTime] = useState(new Date());
   const { state, dispatch } = useAppState();
 
   useEffect(() => {
@@ -109,7 +108,7 @@ const Clock: React.FC = () => {
     return function cleanup() {
       clearInterval(interval);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <ClockContainer>

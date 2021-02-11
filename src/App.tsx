@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import homeImage from './images/home-icon.png';
-import weatherImage from './images/weather-icon.png';
 import settingsImage from './images/settings-icon.png';
 import './App.css';
-//import sunny from './img-weather/sun.png';
-//import cloudsun from './img-weather/sun-cloud.svg';
 import './Weather-icon-animated.css';
 import './Home-icon.css';
 import Clock from './components/Clock';
-import CSS from 'csstype';
 import { MeasurementCard } from './components/MeasurementCard';
 import { MqttStatus } from './components/MqttStatus';
-import { DailyExtremesCard } from './components/DailyExtremesCard';
-import { useAppState } from './AppStateContext';
-import { Grid, Column, Row, LocationContainer, SettingsButton } from './styles';
-import { MeasurementMessage } from './redux/types';
+import { useAppState } from './redux/store';
+import {
+  Grid,
+  Column,
+  Row,
+  LocationContainer,
+  SettingsButton,
+  MqttBadge,
+} from './styles';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const App = () => {
-  const { state, dispatch } = useAppState();
+  const { state } = useAppState();
   const [index, setIndex] = useState(0);
 
   const handleSelect = (e: any) => {
@@ -53,7 +56,9 @@ const App = () => {
         <Column size={1}>
           <Row>
             <Column>
-              <MqttStatus />
+              <MqttBadge>
+                <MqttStatus />
+              </MqttBadge>
             </Column>
             <Column>
               <SettingsButton>

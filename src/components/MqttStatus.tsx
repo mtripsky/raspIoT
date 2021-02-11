@@ -1,11 +1,10 @@
 import React from 'react';
 import { Badge } from 'react-bootstrap';
-import { useAppState } from '../AppStateContext';
+import { useAppState } from '../redux/store';
 
 export const MqttStatus = () => {
-  const { state, dispatch } = useAppState();
+  const { state } = useAppState();
 
-  let badge;
   if (state.mqttClient.status === 'online') {
     return <Badge variant='success'>{state.mqttClient.status}</Badge>;
   } else {

@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
 // 8. Pink & blue
-const defaultColor = '#2f3c7e';
-const defaultBackground = '#fbeaeb';
+//const defaultColor = '#2f3c7e';
+//const defaultBackground = '#fbeaeb';
+
+// gray-black
+const defaultColor = '#000000';
+const defaultBackground = '#f2f2f2';
 
 export const AppContainer = styled.div``;
 
@@ -76,4 +80,8 @@ export const MeasurementValue = styled.div`
 export const MeasurementExtremes = styled.div`
   font-size: 210%;
   padding: 5px 0px 0px 0px;
+`;
+
+export const MqttBadge = styled.div`
+  font-size: 170%;
 `;
