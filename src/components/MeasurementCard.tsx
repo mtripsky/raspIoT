@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  MeasurementTitle,
+  Title,
   MeasurementValue,
   MeasurementCardContainer,
   MeasurementExtremes,
@@ -35,7 +35,7 @@ export const MeasurementCard = ({
 
   return (
     <MeasurementCardContainer>
-      <MeasurementTitle>{name}</MeasurementTitle>
+      <Title>{name}</Title>
       <MeasurementValue>
         {roundToOne(value)}
         {unit}

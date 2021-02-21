@@ -94,7 +94,7 @@ function Formatter(props: Props) {
   );
 }
 
-const Clock: React.FC = () => {
+export const Clock = () => {
   const { state, dispatch } = useAppState();
 
   useEffect(() => {
@@ -111,7 +111,10 @@ const Clock: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <ClockContainer>
+    <ClockContainer
+      backgroundColor={state.fontViewSettings.colorSchema.backgroundColor}
+      textColor={state.fontViewSettings.colorSchema.textColor}
+    >
       <Formatter
         format={'h:m:s p'}
         hours={state.currentTime.getHours()}
@@ -123,5 +126,3 @@ const Clock: React.FC = () => {
     </ClockContainer>
   );
 };
-
-export default Clock;

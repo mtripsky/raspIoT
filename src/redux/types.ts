@@ -1,3 +1,5 @@
+import mqtt from 'mqtt';
+
 export interface Measurement {
   id: string;
   name: string;
@@ -18,15 +20,30 @@ export interface Location {
   measurements: Measurement[];
 }
 
+export interface ColorSchema {
+  textColor: string;
+  backgroundColor: string;
+}
+
+export interface FontViewSettings {
+  colorSchema: ColorSchema;
+}
+
 export interface Client {
   client: any;
   status: string;
+  options: mqtt.IClientOptions;
+  topics: string[];
 }
 export interface AppState {
   locations: Location[];
+  locationCurrentIndex: number;
   mqttClient: Client;
   error?: Error | null;
   currentTime: Date;
+  currentView: string;
+  currentSettingsView: string;
+  fontViewSettings: FontViewSettings;
 }
 
 export interface MeasurementMessage {

@@ -1,4 +1,4 @@
-import { MeasurementMessage, Error } from './types';
+import { MeasurementMessage, Error, ColorSchema } from './types';
 
 export type Action =
   | {
@@ -15,4 +15,20 @@ export type Action =
   | {
       type: 'UPDATE_CURRENT_APPLICATION_TIME';
       payload: Date;
+    }
+  | {
+      type: 'CHANGE_CURRENT_VIEW';
+      payload: string;
+    }
+  | {
+      type: 'CHANGE_CURRENT_SETTINGS_VIEW';
+      payload: string;
+    }
+  | {
+      type: 'CHANGE_FONT_BACKGROUND_SCHEMA';
+      payload: ColorSchema;
+    }
+  | {
+      type: 'CHANGE_CURRENT_LOCATION_INDEX';
+      payload: number;
     };

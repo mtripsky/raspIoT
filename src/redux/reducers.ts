@@ -5,6 +5,32 @@ import { GetDailyExtremes } from '../utils/MeasurementsCalculator';
 
 export const appStateReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
+    case 'CHANGE_CURRENT_LOCATION_INDEX': {
+      state.locationCurrentIndex = action.payload;
+
+      return {
+        ...state,
+      }
+    }
+    case 'CHANGE_FONT_BACKGROUND_SCHEMA': {
+      state.fontViewSettings.colorSchema = action.payload;
+      
+      return {
+        ...state,
+      };
+    }
+    case 'CHANGE_CURRENT_VIEW': {
+      state.currentView = action.payload;
+      return {
+        ...state,
+      };
+    }
+    case 'CHANGE_CURRENT_SETTINGS_VIEW': {
+      state.currentSettingsView = action.payload;
+      return {
+        ...state,
+      };
+    }
     case 'UPDATE_CURRENT_APPLICATION_TIME': {
       state.currentTime = action.payload;
       return {

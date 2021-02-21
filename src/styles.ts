@@ -10,19 +10,27 @@ const defaultBackground = '#f2f2f2';
 
 export const AppContainer = styled.div``;
 
+interface ColorProps {
+  color: string;
+}
+
 interface GridProps {
-  backgroundcolor?: string;
-  textcolor?: string;
+  backgroundColor: string;
+  textColor: string;
 }
 interface ButtonProps {
-  backgroundcolor?: string;
-  textcolor?: string;
+  backgroundColor: string;
+  textColor: string;
+}
+
+interface ToggleButtonProps extends  ButtonProps{
+  selected: boolean;
 }
 
 export const Grid = styled.div<GridProps>`
-  background: ${(props) =>
-    props.backgroundcolor ? props.backgroundcolor : defaultBackground};
-  color: ${(props) => (props.textcolor ? props.textcolor : defaultColor)};
+  background: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor };
+  padding: 3px;
 `;
 
 interface ColumnProps {
@@ -34,16 +42,47 @@ export const Column = styled.div<ColumnProps>`
   flex: ${(props) => (props.size ? props.size : 1)};
 `;
 
+export const ColumnMenuButtons = styled.div<ColumnProps>`
+  text-align: right;
+  flex: ${(props) => (props.size ? props.size : 1)};
+`;
+
 export const Row = styled.div`
   display: flex;
 `;
 
-export const SettingsButton = styled.button<ButtonProps>`
-  background: ${(props) =>
-    props.backgroundcolor ? props.backgroundcolor : defaultBackground};
-  color: ${(props) => (props.textcolor ? props.textcolor : defaultColor)};
-  padding: 0;
+export const RowClock = styled.div`
+  display: flex;
+  height: 90px;
+`;
+
+export const RowMenu = styled.div`
+  display: flex;
+  height: 200px;
+`;
+
+export const ViewButton = styled.button<ButtonProps>`
+  background: ${(props) =>   props.backgroundColor };
+  color: ${(props) => props.textColor };
   border: none;
+  padding: 4px;
+  align: right;
+`;
+
+export const FontButton = styled.button<ButtonProps>`
+  background: ${(props) => props.backgroundColor };
+  color: ${(props) => props.textColor };
+  border: ${(props) => `4px solid ${props.textColor}`};
+  text-align: center;
+  font-size: 150%;
+  padding: 4px;
+`;
+
+export const ToggleButton = styled.button<ToggleButtonProps>`
+  background: ${(props) => props.backgroundColor };
+  color: ${(props) => props.textColor};
+  padding: 5px;
+  border: ${(props) => props.selected ? `2px solid ${props.textColor}` : 'none'};
 `;
 
 export const ClockContainer = styled.div<GridProps>`
@@ -60,7 +99,7 @@ export const MeasurementCardContainer = styled.div`
   text-align: center;
 `;
 
-export const MeasurementTitle = styled.div`
+export const Title = styled.div`
   vertical-align: text-center;
   padding: 6px 10px 10px 10px;
   font-weight: bold;
@@ -84,4 +123,17 @@ export const MeasurementExtremes = styled.div`
 
 export const MqttBadge = styled.div`
   font-size: 170%;
+`;
+
+export const MqttStatusBadge = styled.div<ColorProps>`
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: -2px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0px;
+  height: 30px;
+  width: 30px;
+  background: ${(props) => props.color }; 
 `;

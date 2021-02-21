@@ -43,8 +43,10 @@ const connectFce = function connect(
   callback: OnConnectedCallback
 ) {
   if (client === null) {
+    console.log('starting connecting');
     client = mqtt.connect(options);
     client.on('connect', () => {
+      console.log('connected');
       callback();
     });
   }
