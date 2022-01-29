@@ -1,6 +1,5 @@
 export const roundToOne = (num: number) => {
   return Math.round(num * 10) / 10;
-  /**return +(Math.round(num + 'e+1') + 'e-1');*/
 };
 
 /**

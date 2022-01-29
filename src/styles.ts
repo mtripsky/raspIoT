@@ -30,21 +30,18 @@ interface ToggleButtonProps extends  ButtonProps{
 export const Grid = styled.div<GridProps>`
   background: ${(props) => props.backgroundColor};
   color: ${(props) => props.textColor };
-  padding: 3px;
+  padding: 3px 10px 3px 3px;
 `;
 
 interface ColumnProps {
   size?: number;
+  align?: string;
 }
 
 export const Column = styled.div<ColumnProps>`
-  text-align: center;
+  text-align: ${(props) => (props.align ? props.align : 'center')};
   flex: ${(props) => (props.size ? props.size : 1)};
-`;
-
-export const ColumnMenuButtons = styled.div<ColumnProps>`
-  text-align: right;
-  flex: ${(props) => (props.size ? props.size : 1)};
+  padding: 0px 5px 0px;
 `;
 
 export const Row = styled.div`
@@ -53,12 +50,11 @@ export const Row = styled.div`
 
 export const RowClock = styled.div`
   display: flex;
-  height: 90px;
 `;
 
 export const RowMenu = styled.div`
   display: flex;
-  height: 200px;
+  height: 160px;
 `;
 
 export const ViewButton = styled.button<ButtonProps>`
@@ -67,6 +63,7 @@ export const ViewButton = styled.button<ButtonProps>`
   border: none;
   padding: 4px;
   align: right;
+  text-align: right;
 `;
 
 export const FontButton = styled.button<ButtonProps>`
@@ -87,7 +84,7 @@ export const ToggleButton = styled.button<ToggleButtonProps>`
 
 export const ClockContainer = styled.div<GridProps>`
   text-align: center;
-  font-size: 150%;
+  font-size: 160%;
   padding: 50px 0px 20px 0px;
 `;
 
@@ -103,7 +100,7 @@ export const Title = styled.div`
   vertical-align: text-center;
   padding: 6px 10px 10px 10px;
   font-weight: bold;
-  font-size: 200%;
+  font-size: 250%;
 `;
 
 export const MeasurementTimeLastUpdate = styled.div`
@@ -112,7 +109,7 @@ export const MeasurementTimeLastUpdate = styled.div`
 `;
 
 export const MeasurementValue = styled.div`
-  font-size: 410%;
+  font-size: 435%;
   padding: 0px 0px 0px 0px;
 `;
 
@@ -122,7 +119,8 @@ export const MeasurementExtremes = styled.div`
 `;
 
 export const MqttBadge = styled.div`
-  font-size: 170%;
+  font-size: 120%;
+  text-align: right;
 `;
 
 export const MqttStatusBadge = styled.div<ColorProps>`

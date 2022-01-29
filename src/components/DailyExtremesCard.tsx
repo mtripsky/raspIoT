@@ -1,4 +1,3 @@
-import React from 'react';
 import { MeasurementCardContainer, MeasurementExtremes } from '../styles';
 import { roundToOne } from '../utils/Calculator';
 

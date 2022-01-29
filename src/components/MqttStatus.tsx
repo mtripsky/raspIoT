@@ -1,13 +1,13 @@
 import React from 'react';
+import { Badge } from 'react-bootstrap';
 import { useAppState } from '../redux/store';
-import {MqttStatusBadge} from '../styles';
 
 export const MqttStatus = () => {
   const { state } = useAppState();
 
-  if (state.mqttClient.status === 'online') {
-    return <MqttStatusBadge color={'#5cb85c'}/>;
+  if (state.mqttClient.status === 'on') {
+    return <Badge variant='success'>{state.mqttClient.status}</Badge>;
   } else {
-    return <MqttStatusBadge color={'#d9534f'}/>;
+    return <Badge variant='danger'>{state.mqttClient.status}</Badge>;
   }
 };

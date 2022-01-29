@@ -23,7 +23,6 @@ const Home = () => {
   const [index, setIndex] = useState(-1);
 
   useEffect(() => {
-    console.log('start effect');
     const interval = setInterval(() => {
       if(state.locations.length > 0)
       {
@@ -31,7 +30,6 @@ const Home = () => {
         dispatch({type: 'CHANGE_CURRENT_LOCATION_INDEX', payload: i}); // it will not about new index only next time
 
         setIndex(index + 1);
-        console.log(`index: ${index}, i: ${i}`);
       }
     }, 20000); // 20 second
     // Clear timeout if the component is unmounted

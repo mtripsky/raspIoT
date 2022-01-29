@@ -8,6 +8,7 @@ import {
 } from '../styles';
 import { roundToOne } from '../utils/Calculator';
 import { useAppState } from '../redux/store';
+import {MeasurementTimeUpdate} from './MeasurementTimeUpdate';
 
 interface MeasurementProps {
   name: string;
@@ -29,8 +30,8 @@ export const MeasurementCard = ({
   measurementTime,
 }: MeasurementProps) => {
   const { state } = useAppState();
-  const timeDiffSeconds = Math.ceil(
-    (measurementTime.getTime() - state.currentTime.getTime()) / 1000
+  const timeDiffSeconds = Math.trunc(
+    (measurementTime.getMinutes() - state.currentTime.getMinutes()) 
   );
 
   return (
@@ -40,9 +41,9 @@ export const MeasurementCard = ({
         {roundToOne(value)}
         {unit}
       </MeasurementValue>
-      <MeasurementTimeLastUpdate>
-        (Last update {rtf.format(timeDiffSeconds, 'second')})
-      </MeasurementTimeLastUpdate>
+      <MeasurementTimeUpdate 
+        measurementTime={measurementTime}
+      />
       <MeasurementExtremes>
         min: {roundToOne(minValue)}
         {unit}

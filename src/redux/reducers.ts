@@ -38,7 +38,7 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
       };
     }
     case 'MQTT_ONLINE': {
-      state.mqttClient.status = 'online';
+      state.mqttClient.status = 'on';
       return {
         ...state,
       };

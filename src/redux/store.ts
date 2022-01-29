@@ -21,7 +21,7 @@ const defaultMqttTopics : string [] =[
 export const appDataEmpty: AppState = {
   locations: [],
   locationCurrentIndex: -1,
-  mqttClient: { client: null, status: 'offline', options: defaultMqttConnectionOptions, topics: defaultMqttTopics },
+  mqttClient: { client: null, status: 'off', options: defaultMqttConnectionOptions, topics: defaultMqttTopics },
   error: null,
   currentTime: new Date(),
   currentView: 'Home',
