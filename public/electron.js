@@ -9,6 +9,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 480,
     height: 320,
+    resizable: false,
+    frame: false,
+    roundedCorners: false,
     //fullscreen: true,
   });
 
