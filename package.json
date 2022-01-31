@@ -1,6 +1,6 @@
 {
   "name": "iot-raspberry",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "description": "MVC to visualize weather measurements from home made weather station.",
   "author": {
@@ -16,6 +16,10 @@
       "buildResources": "build",
       "output": "dist"
     },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
     "mac": {
       "icon": "assets/mac/logo.ico",
       "type": "distribution",
@@ -91,12 +95,14 @@
     "react-build": "react-scripts build",
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder --dir --armv7l --linux deb",
+    "electron-build-raspberry": "electron-builder --dir --armv7l --linux deb",
+    "electron-build-mac": "electron-builder --dir --mac",
     "release": "yarn react-build && electron-builder --publish=always",
-    "build": "yarn react-build && yarn electron-build",
+    "buildRaspberry": "yarn react-build && yarn electron-build-raspberry",
+    "buildMac": "yarn react-build && yarn electron-build-mac",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "package": "electron-packager . electron-react-app --platform=linux --arch=armv7l --overwrite --prune=true --out=release",
-    "lint:ts": "tslint -c tslint.json 'src/**/*.{ts,tsx,js}'"
+    "lint:ts": "tslint -c tslint.json 'src/**/*.{ts,tsx,js}'",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"
