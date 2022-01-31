@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import { useAppState } from './redux/store';
 import Home from './views/Home';
 import Settings from './views/Settings';
@@ -10,9 +9,9 @@ import {
 } from './styles';
 
 const App = () => {
-  const { state, dispatch } = useAppState();
+  const { state } = useAppState();
 
-  const currentView = state.currentView == 'Home' 
+  const currentView = state.currentView === 'Home' 
     ? <Home />
     : <Settings />
 

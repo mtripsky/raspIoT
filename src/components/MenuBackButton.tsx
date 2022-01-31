@@ -1,7 +1,5 @@
-import settingsImage from '../images/settings-icon.png';
 import { useAppState } from '../redux/store';
-import { Column, Row, ViewButton } from '../styles';
-import {LocationCarouselImage} from './LocationCarouselImage';
+import { Column, ViewButton } from '../styles';
 import settingsIconImage from '../images/settings-icon.png';
 import homeIconImage from '../images/home-button.png';
 

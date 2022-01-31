@@ -14,19 +14,9 @@ export const MeasurementTimeUpdate = ({measurementTime} : MeasurementTimeUpdateP
     (measurementTime.getMinutes() - state.currentTime.getMinutes()) 
   );
 
-  if(timeDiffMinutes <= 0) {
-      return (
-        <MeasurementTimeLastUpdate>
-          (Last update: just now)
-        </MeasurementTimeLastUpdate>
-      );
-    }
-    else
-    {
-      return (
-        <MeasurementTimeLastUpdate>
-          (Last update: {rtf.format(timeDiffMinutes, 'minutes')})
-        </MeasurementTimeLastUpdate>
-      );
-    }
+  return (
+    <MeasurementTimeLastUpdate>
+      (Last update: {timeDiffMinutes <= 0 ? 'just now' : rtf.format(timeDiffMinutes, 'minutes')})          
+    </MeasurementTimeLastUpdate>
+  );
 };

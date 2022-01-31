@@ -30,7 +30,7 @@ export const SubSettingsMenuView = () => {
                 })
               }}
             >
-              <img
+              <img alt=""
                 src={subsetting.image}
                 width={50}
               />

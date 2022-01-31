@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React from 'react';
 import { MqttSettingsForm } from '../components/MqttSettingsForm';
-import mqttImage from '../images/mqtt-icon.png';
 import { useAppState } from '../redux/store';
-import { Grid, Column, Row, ViewButton, Title } from '../styles';
+import { Column, Row, Title } from '../styles';
 
 
 export const MqttSettings = () => {
-  const {state, dispatch } = useAppState();
+  const {state } = useAppState();
 
   return (
     <Row>

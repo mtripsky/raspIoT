@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import homeImage from '../images/home-icon.png';
-import weatherImage from '../images/weather-icon.png';
-import settingsImage from '../images/settings-icon.png';
 import '../Weather-icon-animated.css';
 import '../Home-icon.css';
-import {Clock} from '../components/Clock';
 import { MeasurementCard } from '../components/MeasurementCard';
-import { MqttStatus } from '../components/MqttStatus';
 import { useAppState } from '../redux/store';
 import {
-  Grid,
   Column,
-  Row,
-  LocationContainer,
-  ViewButton,
-  MqttBadge,
+  Row
 } from '../styles';
 
 const Home = () => {

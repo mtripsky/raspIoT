@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAppState } from '../redux/store';
 import { Column, Row, FontButton, Title } from '../styles';
 import {ColorSchema} from '../redux/types'

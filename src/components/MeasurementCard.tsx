@@ -3,11 +3,9 @@ import {
   Title,
   MeasurementValue,
   MeasurementCardContainer,
-  MeasurementExtremes,
-  MeasurementTimeLastUpdate,
+  MeasurementExtremes
 } from '../styles';
 import { roundToOne } from '../utils/Calculator';
-import { useAppState } from '../redux/store';
 import {MeasurementTimeUpdate} from './MeasurementTimeUpdate';
 
 interface MeasurementProps {
@@ -19,8 +17,6 @@ interface MeasurementProps {
   measurementTime: Date;
 }
 
-const rtf = new Intl.RelativeTimeFormat('en', { style: 'long' });
-
 export const MeasurementCard = ({
   name,
   value,
@@ -29,11 +25,6 @@ export const MeasurementCard = ({
   maxValue,
   measurementTime,
 }: MeasurementProps) => {
-  const { state } = useAppState();
-  const timeDiffSeconds = Math.trunc(
-    (measurementTime.getMinutes() - state.currentTime.getMinutes()) 
-  );
-
   return (
     <MeasurementCardContainer>
       <Title>{name}</Title>

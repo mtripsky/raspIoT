@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAppState } from '../redux/store';
 import { Column, Row} from '../styles';
 import { MqttSettings } from './MqttSettings';
@@ -10,10 +10,10 @@ const Settings = () => {
   return (
     <Row>
       <Column>
-        {state.currentSettingsView == 'MqttSettings' &&
+        {state.currentSettingsView === 'MqttSettings' &&
           <MqttSettings />
         }
-        {state.currentSettingsView == 'FontSettings' &&
+        {state.currentSettingsView === 'FontSettings' &&
           <FontSettings />
         }
       </Column>
