@@ -31,10 +31,18 @@ export const Grid = styled.div<GridProps>`
   background: ${(props) => props.backgroundColor};
   color: ${(props) => props.textColor };
   padding: 3px 10px 3px 3px;
+  width: 480px;
+  max-width: 480px;
+  height: 320px;
+  max-height: 320px;
 `;
 
 interface ColumnProps {
   size?: number;
+  align?: string;
+}
+
+interface RowProps {
   align?: string;
 }
 
@@ -44,9 +52,15 @@ export const Column = styled.div<ColumnProps>`
   padding: 0px 5px 0px;
 `;
 
-export const Row = styled.div`
+export const Row = styled.div<RowProps>`
   display: flex;
+  text-align: ${(props) => (props.align ? props.align : 'center')};
 `;
+
+export const RowNoFlex = styled.div<RowProps>`
+  text-align: ${(props) => (props.align ? props.align : 'center')};
+`;
+
 
 export const RowClock = styled.div`
   display: flex;
@@ -55,6 +69,7 @@ export const RowClock = styled.div`
 export const RowMenu = styled.div`
   display: flex;
   height: 160px;
+  max-height: 160px;
 `;
 
 export const ViewButton = styled.button<ButtonProps>`

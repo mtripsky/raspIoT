@@ -31,4 +31,15 @@ export type Action =
   | {
       type: 'CHANGE_CURRENT_LOCATION_INDEX';
       payload: number;
+    }
+  | {
+      type: 'AQUARIUM_LIGHT_SLIDER_ACTIVE';
+    }
+  | {
+      type: 'AQUARIUM_LIGHT_TIMER_SAVED';
+      payload: number[];
+    }
+  | {
+      type: 'AQUARIUM_LIGHT_MANUAL_TOGGLE';
+      payload: boolean;
     };

@@ -17,16 +17,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
     "rootDir": "src",
     "noFallthroughCasesInSwitch": true,
     "plugins": [
       {
         "name": "typescript-tslint-plugin"
       }
-    ]
+    ],
+    "jsx": "react-jsx"
   },
   "include": [
+    "./src/**/*.tsx",
+    "./src/*.tsx",
     "src"
   ]
 }

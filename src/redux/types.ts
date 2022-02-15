@@ -29,6 +29,13 @@ export interface FontViewSettings {
   colorSchema: ColorSchema;
 }
 
+export interface AquariumSettings{
+  timerSaveButtonActive: boolean;
+  timerLightStart: number;
+  timerLightEnd: number;
+  lightStatus: boolean;
+}
+
 export interface Client {
   client: any;
   status: string;
@@ -44,6 +51,7 @@ export interface AppState {
   currentView: string;
   currentSettingsView: string;
   fontViewSettings: FontViewSettings;
+  aquariumSettings: AquariumSettings;
 }
 
 export interface MeasurementMessage {

@@ -68,7 +68,9 @@
     "tslint-react": "^5.0.0"
   },
   "dependencies": {
-    "-": "^0.0.1",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.4.0",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "@types/styled-components": "^5.1.7",
@@ -81,7 +83,7 @@
     "mqtt": "^4.2.6",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
+    "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.0",
     "server": "^1.0.37",

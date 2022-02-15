@@ -4,9 +4,9 @@ import { Action } from './actions';
 import mqtt from 'mqtt';
 
 const defaultMqttConnectionOptions: mqtt.IClientOptions = {
-  protocol: 'ws',
-  port: 8883,
-  host: 'localhost',
+  protocol: 'mqtt',
+  port: 1883,
+  host: '192.168.1.35',
 };
 
 const defaultMqttTopics : string [] =[
@@ -15,18 +15,29 @@ const defaultMqttTopics : string [] =[
   //'/weather/batterylevel',
   '/weather/temperature/bme280',
   '/weather/humidity/bme280',
-  '/weather/pressure/bme280'
+  '/weather/pressure/bme280',
 ];
 
 export const appDataEmpty: AppState = {
   locations: [],
   locationCurrentIndex: -1,
-  mqttClient: { client: null, status: 'off', options: defaultMqttConnectionOptions, topics: defaultMqttTopics },
+  mqttClient: {
+    client: null,
+    status: 'off',
+    options: defaultMqttConnectionOptions,
+    topics: defaultMqttTopics },
   error: null,
   currentTime: new Date(),
   currentView: 'Home',
   currentSettingsView: 'MqttSettings',
-  fontViewSettings: { colorSchema: { textColor: '#000000', backgroundColor:'#f2f2f2'}}
+  fontViewSettings: {
+    colorSchema: { textColor: '#000000', backgroundColor:'#f2f2f2'}},
+  aquariumSettings: {
+    timerSaveButtonActive: false,
+    timerLightStart: 7,
+    timerLightEnd: 18,
+    lightStatus: false,
+  },
 };
 
 interface AppStateContextProps {

@@ -24,7 +24,6 @@ export const FontSettings = () => {
         </Row> 
         <Row>
           <Column>
-          <Row><h5>Color schema:</h5></Row>
           <Row>
           {colorschemas.map((schema, i) => (
             <Column>

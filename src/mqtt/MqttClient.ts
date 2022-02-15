@@ -27,11 +27,15 @@ interface OnErrorCallback {
 interface OnDisconnectedCallback {
   (): void;
 }
+interface PublishFce {
+  (topic: string, msg: string): void;
+}
 
-interface Receiver {
+interface Client {
   connect: ConnectFce;
   disconnect: DisconectFce;
   subscribe: SubscribeFce;
+  publish: PublishFce;
   registerCallbackOnMessage: (callback: OnMessageCallback) => void;
   registerCallbackOnDisconnected: (callback: OnDisconnectedCallback) => void;
 }
@@ -77,7 +81,6 @@ const registerCallbackOnMessageFce = function registerCallbackOnMessageFce(
     });
   }
 };
-
 const registerCallbackOnDisconnectedClosedOfflineFce = function registerCallbackOnDisconnectedClosedOfflineFce(
   callback: OnDisconnectedCallback
 ) {
@@ -102,13 +105,24 @@ const registerCallbackOnDisconnectedClosedOfflineFce = function registerCallback
     });
   }
 };
+const publishFce = function publish(
+  topic: string,
+  msg: string
+) {
+  if (client) {
+    console.log(`publish on topic: ${topic}, msg: ${msg}`);
+    client.publish(topic, msg);
+  }
+  return client;
+};
 
-let receiver: Receiver = {
+let mqttClient: Client = {
   connect: connectFce,
   disconnect: disconnectFce,
   subscribe: subscribeFce,
+  publish: publishFce,
   registerCallbackOnMessage: registerCallbackOnMessageFce,
   registerCallbackOnDisconnected: registerCallbackOnDisconnectedClosedOfflineFce,
 };
 
-export default receiver;
+export default mqttClient;

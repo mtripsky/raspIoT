@@ -6,8 +6,8 @@ export const MqttStatus = () => {
   const { state } = useAppState();
 
   if (state.mqttClient.status === 'on') {
-    return <Badge variant='success'>{state.mqttClient.status}</Badge>;
+    return <Badge bg='success'>{state.mqttClient.status}</Badge>;
   } else {
-    return <Badge variant='danger'>{state.mqttClient.status}</Badge>;
+    return <Badge bg='danger'>{state.mqttClient.status}</Badge>;
   }
 };

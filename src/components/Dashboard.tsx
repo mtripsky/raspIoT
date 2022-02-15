@@ -8,21 +8,30 @@ import {MqttStatus} from './MqttStatus';
 
 export const Dashboard = () => {
   const {state } = useAppState();
-  const menu = state.currentView === 'Home' 
-    ? <HomeMenu />
-    : <SettingsMenu />
 
-  return (
-    <>
-      <MqttBadge>
-        <MqttStatus />
-      </MqttBadge>
-      <RowMenu>
-        {menu}
-      </RowMenu>
-      <RowClock>
-        <Clock />
-      </RowClock>
-    </>
-  );
+  if(state.currentView === 'Home' )
+  {
+    return (
+      <>
+        <MqttBadge>
+          <MqttStatus />
+        </MqttBadge>
+        <RowMenu>
+          <HomeMenu />
+        </RowMenu>
+        <RowClock>
+          <Clock />
+        </RowClock>
+      </>
+    );
+  } else
+  {
+    return (
+      <>
+        <SettingsMenu />
+      </>
+    )
+  }
+  
+  
 }

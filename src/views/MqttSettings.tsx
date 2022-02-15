@@ -5,7 +5,8 @@ import { Column, Row, Title } from '../styles';
 
 
 export const MqttSettings = () => {
-  const {state } = useAppState();
+  const {state} = useAppState();
+  
 
   return (
     <Row>
@@ -19,7 +20,7 @@ export const MqttSettings = () => {
         </Row>
         <Row>
           <Column align='left'>
-            <MqttSettingsForm />
+            {/* <MqttSettingsForm /> */}
             <Row><h5>Connection settings:</h5></Row>
             <Row>hostname: {state.mqttClient.options.hostname}</Row>
             <Row>port: {state.mqttClient.options.port}</Row>

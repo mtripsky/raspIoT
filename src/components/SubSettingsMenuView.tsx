@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import mqttImage from '../images/mqtt-icon.png';
 import fontImage from '../images/font-color-icon.png';
+import aquariumImage from '../images/aquarium.png';
 import { useAppState } from '../redux/store';
 import {Column, Row, ViewButton} from '../styles';
 
@@ -11,6 +12,7 @@ export const SubSettingsMenuView = () => {
   const subsettings = [
     { name: 'MqttSettings', value: '1', image: mqttImage},
     { name: 'FontSettings', value: '2', image: fontImage},
+    { name: 'AquariumSettings', value: '3', image: aquariumImage},
   ];
 
   return (

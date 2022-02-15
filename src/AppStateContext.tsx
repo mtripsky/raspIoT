@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import receiver from './mqtt/MqttReceiver';
+import mqttClient from './mqtt/MqttClient';
 import {
   AppStateContext,
   appDataEmpty
@@ -10,20 +10,20 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useReducer(appStateReducer, appDataEmpty);
 
   useEffect(() => {
-    state.mqttClient.client = receiver.connect(state.mqttClient.options, () => {
+    state.mqttClient.client = mqttClient.connect(state.mqttClient.options, () => {
       dispatch({ type: 'MQTT_ONLINE' });
     });
-    receiver.subscribe(state.mqttClient.topics, { qos: 1 });
-    receiver.registerCallbackOnMessage((topic: string, message: Buffer) => {
+    mqttClient.subscribe(state.mqttClient.topics, { qos: 1 });
+    mqttClient.registerCallbackOnMessage((topic: string, message: Buffer) => {
       dispatch({
         type: 'NEW_MEASUREMENT_MESSAGE',
         payload: JSON.parse(message.toString()),
       });
     });
-    receiver.registerCallbackOnDisconnected(() => {});
+    mqttClient.registerCallbackOnDisconnected(() => {});
 
     return function cleanup() {
-      state.mqttClient.client = receiver.disconnect();
+      state.mqttClient.client = mqttClient.disconnect();
     };
   }, []); 
 

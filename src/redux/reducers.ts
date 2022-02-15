@@ -43,6 +43,37 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
       };
     }
+    case 'AQUARIUM_LIGHT_SLIDER_ACTIVE': {
+      state.aquariumSettings.timerSaveButtonActive =
+        !state.aquariumSettings.timerSaveButtonActive;
+      return {
+        ...state,
+      };
+     // timerSaveButtonActive: false,
+      //timerLightStart: 7,
+      //timerLightEnd: 18,
+     // lightStatus: false,
+    }
+    case 'AQUARIUM_LIGHT_TIMER_SAVED': {
+      state.aquariumSettings.timerLightStart = action.payload[0];
+      state.aquariumSettings.timerLightEnd = action.payload[1];
+
+      //state.mqttClient.client
+
+      return {
+        ...state,
+      };
+    }
+    case 'AQUARIUM_LIGHT_MANUAL_TOGGLE': {
+      const msg = `{"channel": 37, "state": "OUT", "value": ${action.payload}`;
+      // tslint:disable-next-line: no-console
+      console.log(msg);
+      state.mqttClient.client.publish('/raspberrypi-pins/set', msg);
+
+      return {
+        ...state,
+      };
+    }
     case 'NEW_MEASUREMENT_MESSAGE': {
       const indLoc = state.locations.findIndex(
         (l) => l.name === action.payload.location
