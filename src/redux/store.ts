@@ -4,9 +4,16 @@ import { Action } from './actions';
 import mqtt from 'mqtt';
 
 const defaultMqttConnectionOptions: mqtt.IClientOptions = {
-  protocol: 'mqtt',
-  port: 1883,
+  //const url = `ws://${host}:${port}/mqtt`;
+  //protocol: 'mqtt',
+  port: 8883,
   host: '192.168.1.35',
+  protocolId: 'MQTT',
+  protocolVersion: 4,
+  clean: true,
+  reconnectPeriod: 1000,
+  connectTimeout: 30 * 1000,
+  rejectUnauthorized: false
 };
 
 const defaultMqttTopics : string [] =[
@@ -25,7 +32,7 @@ export const appDataEmpty: AppState = {
     client: null,
     status: 'off',
     options: defaultMqttConnectionOptions,
-    topics: defaultMqttTopics },
+    topics: defaultMqttTopics},
   error: null,
   currentTime: new Date(),
   currentView: 'Home',

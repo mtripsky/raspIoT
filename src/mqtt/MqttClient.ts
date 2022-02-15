@@ -18,9 +18,8 @@ interface SubscribeFce {
 interface OnMessageCallback {
   (topic: string, msg: Buffer): void;
 }
-interface OnConnectedCallback {
-  (): void;
-}
+type OnConnectedCallback = () => void;
+
 interface OnErrorCallback {
   (error: string): void;
 }
@@ -47,16 +46,15 @@ const connectFce = function connect(
   callback: OnConnectedCallback
 ) {
   if (client === null) {
-    console.log('starting connecting');
-    client = mqtt.connect(options);
-    client.on('connect', () => {
-      console.log('connected');
+    const url = `ws://${options.host}:${options.port}/mqtt`;
+    client = mqtt.connect(url, options);
+    client.on('connect', (): void => {
       callback();
     });
   }
   return client;
 };
-const disconnectFce = function disconnect() {
+const disconnectFce = function disconnect(): mqtt.MqttClient | null {
   if (client) {
     console.log('disconnecting....');
     client.end();
@@ -68,15 +66,15 @@ const disconnectFce = function disconnect() {
 const subscribeFce = function subscribe(
   topic: string | string[],
   options: mqtt.IClientPublishOptions = { qos: 0 }
-) {
+): void {
   client.subscribe(topic, options);
   return client;
 };
 const registerCallbackOnMessageFce = function registerCallbackOnMessageFce(
   callback: OnMessageCallback
-) {
+): void {
   if (client) {
-    client.on('message', (topic: string, message: Buffer) => {
+    client.on('message', (topic: string, message: Buffer): void => {
       callback(topic, message);
     });
   }

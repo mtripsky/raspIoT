@@ -65,9 +65,7 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
       };
     }
     case 'AQUARIUM_LIGHT_MANUAL_TOGGLE': {
-      const msg = `{"channel": 37, "state": "OUT", "value": ${action.payload}`;
-      // tslint:disable-next-line: no-console
-      console.log(msg);
+      const msg = `{"channel": 37, "state": "OUT", "value": ${action.payload}}`;
       state.mqttClient.client.publish('/raspberrypi-pins/set', msg);
 
       return {
