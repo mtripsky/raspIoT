@@ -11,7 +11,7 @@ export const FontSettings = () => {
     {textColor: '#ffffff', backgroundColor:'#0f60b6'},
     {textColor: '#2f3c7e', backgroundColor:'#fbeaeb'},
   ]
-    
+
   return (
     <Row>
       <Column>

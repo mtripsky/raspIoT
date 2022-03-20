@@ -73,7 +73,7 @@ interface Props {
 
 function Formatter(props: Props) {
   const { format, separator, hours, minutes, seconds, twelveHours } = props;
-  let children = format.split('').map((e) => {
+  const children = format.split('').map((e: string) => {
     if (e === 'h') {
       return <Hour hours={hours} twelveHours={twelveHours} />;
     } else if (e === 'm') {
@@ -83,7 +83,7 @@ function Formatter(props: Props) {
     } else if (e === 'p') {
       return <Ampm hours={hours} />;
     } else if (e === ' ') {
-      return <span> </span>;
+      return <span />;
     } else {
       return <Separator separator={separator} />;
     }
@@ -98,14 +98,14 @@ export const Clock = () => {
   const { state, dispatch } = useAppState();
 
   useEffect(() => {
-    var interval = setInterval(function () {
+    const interval = setInterval((): void => {
       dispatch({
         type: 'UPDATE_CURRENT_APPLICATION_TIME',
         payload: new Date(),
       });
     }, 500);
 
-    return function cleanup() {
+    return function cleanup(): void {
       clearInterval(interval);
     };
   }, [dispatch]);

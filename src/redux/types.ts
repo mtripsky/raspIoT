@@ -34,6 +34,9 @@ export interface AquariumSettings{
   timerLightStart: number;
   timerLightEnd: number;
   lightStatus: boolean;
+  lightControlType: string;
+  scheduledLightOn: any;
+  scheduledLightOff: any;
 }
 
 export interface Client {
@@ -46,6 +49,7 @@ export interface AppState {
   locations: Location[];
   locationCurrentIndex: number;
   mqttClient: Client;
+  //switchBot: any;
   error?: Error | null;
   currentTime: Date;
   currentView: string;
@@ -66,4 +70,25 @@ export interface MeasurementMessage {
 
 export interface Error {
   text: string;
+}
+
+export interface TemperatureSwitchBot {
+  c: number;
+  f: number;
+}
+
+export interface ServiceDataSwitchBot {
+  model: string;
+  modelName: string;
+  temperature: TemperatureSwitchBot;
+  fahrenheit: boolean;
+  humidity: number;
+  battery: number;
+}
+
+export interface AdvertisementDataSwitchBot {
+  id: string;
+  address: string;
+  rssi: number;
+  serviceData: ServiceDataSwitchBot;
 }

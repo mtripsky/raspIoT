@@ -1,16 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { useAppState } from '../redux/store';
-import {  MqttBadge, RowMenu, RowClock} from '../styles';
+import { MqttBadge, RowMenu, RowClock } from '../styles';
 import { Clock } from './Clock';
-import {HomeMenu } from './HomeMenu';
-import {SettingsMenu} from './SettingsMenu';
-import {MqttStatus} from './MqttStatus';
+import { HomeMenu } from './HomeMenu';
+import { SettingsMenu } from './SettingsMenu';
+import { MqttStatus } from './MqttStatus';
 
 export const Dashboard = () => {
-  const {state } = useAppState();
+  const { state } = useAppState();
 
-  if(state.currentView === 'Home' )
-  {
+  if (state.currentView === 'Home') {
     return (
       <>
         <MqttBadge>
@@ -24,14 +23,11 @@ export const Dashboard = () => {
         </RowClock>
       </>
     );
-  } else
-  {
+  } else {
     return (
       <>
         <SettingsMenu />
       </>
-    )
+    );
   }
-  
-  
-}
+};

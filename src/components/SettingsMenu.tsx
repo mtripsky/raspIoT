@@ -1,4 +1,4 @@
-import {Column, Row} from '../styles';
+import { Column, Row } from '../styles';
 import { SubSettingsMenuView } from './SubSettingsMenuView';
 import { MenuBackButton } from './MenuBackButton';
 

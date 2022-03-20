@@ -4,10 +4,7 @@ import '../Weather-icon-animated.css';
 import '../Home-icon.css';
 import { MeasurementCard } from '../components/MeasurementCard';
 import { useAppState } from '../redux/store';
-import {
-  Column,
-  Row
-} from '../styles';
+import { Column, Row } from '../styles';
 
 const Home = () => {
   const { state, dispatch} = useAppState();
@@ -32,7 +29,7 @@ const Home = () => {
       <Column>
         {state.locationCurrentIndex > -1 && state.locationCurrentIndex < state.locations.length 
           ? (
-            <Carousel interval={5000} indicators={false}>
+            <Carousel interval={10000} indicators={false} nextLabel={null} prevLabel={null}>
               {state.locations[state.locationCurrentIndex].measurements.map((measurement, i) => (
                 <Carousel.Item>
                   <MeasurementCard

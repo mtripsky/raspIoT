@@ -23,18 +23,35 @@ interface ButtonProps {
   textColor: string;
 }
 
-interface ToggleButtonProps extends  ButtonProps{
+interface ToggleButtonProps extends ButtonProps {
   selected: boolean;
 }
 
 export const Grid = styled.div<GridProps>`
   background: ${(props) => props.backgroundColor};
-  color: ${(props) => props.textColor };
+  color: ${(props) => props.textColor};
   padding: 3px 10px 3px 3px;
   width: 480px;
   max-width: 480px;
   height: 320px;
   max-height: 320px;
+`;
+
+export const Measurement = styled.a`
+  font-size: 300%;
+`;
+
+export const Unit = styled.b`
+  position: absolute;
+  padding-bottom: 10px;
+  padding-right: 40px;
+  width:20px
+  font-size: 50%;
+`;
+
+export const MeasurementDecimal = styled.b`
+  bottom: 0;
+  font-size: 50%;
 `;
 
 interface ColumnProps {
@@ -125,12 +142,10 @@ export const MeasurementTimeLastUpdate = styled.div`
 
 export const MeasurementValue = styled.div`
   font-size: 435%;
-  padding: 0px 0px 0px 0px;
 `;
 
 export const MeasurementExtremes = styled.div`
   font-size: 210%;
-  padding: 5px 0px 0px 0px;
 `;
 
 export const MqttBadge = styled.div`

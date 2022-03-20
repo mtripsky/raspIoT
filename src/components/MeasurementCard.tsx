@@ -3,10 +3,13 @@ import {
   Title,
   MeasurementValue,
   MeasurementCardContainer,
-  MeasurementExtremes
+  MeasurementExtremes,
+  Measurement,
+  Unit,
+  MeasurementDecimal,
 } from '../styles';
-import { roundToOne } from '../utils/Calculator';
-import {MeasurementTimeUpdate} from './MeasurementTimeUpdate';
+import { roundToOne, getDecimal } from '../utils/Calculator';
+import { MeasurementTimeUpdate } from './MeasurementTimeUpdate';
 
 interface MeasurementProps {
   name: string;
@@ -27,21 +30,28 @@ export const MeasurementCard = ({
 }: MeasurementProps) => {
   return (
     <MeasurementCardContainer>
-      <Title>{name}</Title>
+      {/* <Title>{name}</Title>
       <MeasurementValue>
         {roundToOne(value)}
         {unit}
+      </MeasurementValue> */}
+      <MeasurementValue>
+        {Math.floor(value)}
+        <Unit>{unit}</Unit>
+        <MeasurementDecimal>.{getDecimal(value)}</MeasurementDecimal>
       </MeasurementValue>
-      <MeasurementTimeUpdate 
+      <MeasurementTimeUpdate
         measurementTime={measurementTime}
       />
       <MeasurementExtremes>
-        min: {roundToOne(minValue)}
-        {unit}
+        {Math.floor(minValue)}
+        <Unit>{unit}</Unit>
+        <MeasurementDecimal>.{getDecimal(minValue)}</MeasurementDecimal>
       </MeasurementExtremes>
       <MeasurementExtremes>
-        max: {roundToOne(maxValue)}
-        {unit}
+        {Math.floor(maxValue)}
+        <Unit>{unit}</Unit>
+        <MeasurementDecimal>.{getDecimal(maxValue)}</MeasurementDecimal>
       </MeasurementExtremes>
     </MeasurementCardContainer>
   );

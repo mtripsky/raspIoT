@@ -1,9 +1,18 @@
-import { MeasurementMessage, Error, ColorSchema } from './types';
+import {
+  MeasurementMessage,
+  Error,
+  ColorSchema,
+  AdvertisementDataSwitchBot,
+} from './types';
 
 export type Action =
   | {
       type: 'NEW_MEASUREMENT_MESSAGE';
       payload: MeasurementMessage;
+    }
+  | {
+      type: 'NEW_MEASUREMENT_SWITCHBOT';
+      payload: AdvertisementDataSwitchBot;
     }
   | {
       type: 'MQTT_ONLINE';
@@ -33,7 +42,8 @@ export type Action =
       payload: number;
     }
   | {
-      type: 'AQUARIUM_LIGHT_SLIDER_ACTIVE';
+      type: 'AQUARIUM_LIGHT_CONTROL_TYPE';
+      payload: string;
     }
   | {
       type: 'AQUARIUM_LIGHT_TIMER_SAVED';

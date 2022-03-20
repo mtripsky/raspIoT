@@ -13,14 +13,16 @@ export const LocationCarouselImage = ({locationName}: LocationCarouselImageProps
       <LocationContainer>
         <img src={homeImage} width={120} alt='HomeIcon' />
       </LocationContainer>)
-  } else if(locationName === 'OUTSIDE')
-  {
+  } else if(locationName === 'OUTSIDE') {
     return (
       <LocationContainer>
         <img src={weatherImage} width={120} alt='WeatherIcon' />
       </LocationContainer>)
   } else
   {
-    return null;
+    return (
+      <LocationContainer>
+        <img src={homeImage} width={120} alt='HomeIcon' />
+      </LocationContainer>)
   }
 }

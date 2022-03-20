@@ -10,7 +10,7 @@ interface MeasurementTimeUpdateProps {
 
 export const MeasurementTimeUpdate = ({measurementTime} : MeasurementTimeUpdateProps) => {
   const { state } = useAppState();
-  const timeDiffMinutes= Math.trunc(
+  const timeDiffMinutes = Math.trunc(
     (measurementTime.getMinutes() - state.currentTime.getMinutes()) 
   );
 

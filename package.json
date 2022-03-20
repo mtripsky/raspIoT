@@ -68,6 +68,7 @@
     "tslint-react": "^5.0.0"
   },
   "dependencies": {
+    "@abandonware/noble": "^1.9.2-15",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.4.0",
@@ -77,10 +78,13 @@
     "bootstrap": "^4.6.0",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
+    "electron-log": "^4.4.6",
     "g": "^2.0.1",
     "jquery": "^3.5.1",
     "live": "^0.1.25-beta.0",
     "mqtt": "^4.2.6",
+    "node-schedule": "^2.1.0",
+    "node-switchbot": "^1.1.2",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-bootstrap": "^2.1.2",

@@ -28,8 +28,8 @@ export const MqttSettings = () => {
               <Row>
               <small>
               <ul>
-                {state.mqttClient.topics.map((topic, i) =>(
-                  <li>{topic}</li>
+                {state.locations.map((topic, i) =>(
+                  <li>{topic.name}</li>
                 ))}
               </ul>
               </small>

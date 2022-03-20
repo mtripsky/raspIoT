@@ -2,6 +2,8 @@ import { v4 as uuid } from 'uuid';
 import { Action } from './actions';
 import { AppState } from './types';
 import { GetDailyExtremes } from '../utils/MeasurementsCalculator';
+const Schedule = require('node-schedule');
+const log = require('electron-log');
 
 export const appStateReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
@@ -43,36 +45,77 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
       };
     }
-    case 'AQUARIUM_LIGHT_SLIDER_ACTIVE': {
-      state.aquariumSettings.timerSaveButtonActive =
-        !state.aquariumSettings.timerSaveButtonActive;
+    case 'AQUARIUM_LIGHT_CONTROL_TYPE': {
+      state.aquariumSettings.lightControlType = action.payload;
+
+      if (action.payload === 'manual') {
+        state.aquariumSettings.timerSaveButtonActive = false;
+        if(state.aquariumSettings.scheduledLightOn &&
+          state.aquariumSettings.scheduledLightOff) {
+            state.aquariumSettings.scheduledLightOn.cancel();
+            state.aquariumSettings.scheduledLightOff.cancel();
+          }
+      } else {
+        state.aquariumSettings.timerSaveButtonActive = true;
+      }
+
       return {
         ...state,
       };
-     // timerSaveButtonActive: false,
-      //timerLightStart: 7,
-      //timerLightEnd: 18,
-     // lightStatus: false,
     }
     case 'AQUARIUM_LIGHT_TIMER_SAVED': {
       state.aquariumSettings.timerLightStart = action.payload[0];
       state.aquariumSettings.timerLightEnd = action.payload[1];
+      state.aquariumSettings.timerSaveButtonActive = false;
 
-      //state.mqttClient.client
+      if (state.aquariumSettings.scheduledLightOn &&
+        state.aquariumSettings.scheduledLightOff) {
+        state.aquariumSettings.scheduledLightOn.cancel();
+        state.aquariumSettings.scheduledLightOff.cancel();
+      }
+      const currentTime = state.currentTime.getSeconds();
+      const msgOff = `{"channel": 37, "state": "OUT", "value": 0}`;
+      const msgOn = `{"channel": 37, "state": "OUT", "value": 1}`;
+
+      if (
+        currentTime >= state.aquariumSettings.timerLightStart &&
+        currentTime <= state.aquariumSettings.timerLightEnd
+      ) {
+        state.mqttClient.client.publish('/raspberrypi-pins/set', msgOn);
+        state.aquariumSettings.lightStatus = true;
+      } else {
+        state.mqttClient.client.publish('/raspberrypi-pins/set', msgOff);
+        state.aquariumSettings.lightStatus = false;
+      }
+
+      state.aquariumSettings.scheduledLightOn = Schedule.scheduleJob(
+        `${state.aquariumSettings.timerLightStart} * * * * *`, (): void => {
+          state.mqttClient.client.publish('/raspberrypi-pins/set', msgOn);
+          state.aquariumSettings.lightStatus = true;
+      });
+      state.aquariumSettings.scheduledLightOff = Schedule.scheduleJob(
+        `${state.aquariumSettings.timerLightEnd} * * * * *`, (): void =>{
+          state.mqttClient.client.publish('/raspberrypi-pins/set', msgOff);
+          state.aquariumSettings.lightStatus = false;
+      });
 
       return {
         ...state,
       };
     }
     case 'AQUARIUM_LIGHT_MANUAL_TOGGLE': {
+      log.info('Hello, log');
+      log.error('Damn it, an error');
       const msg = `{"channel": 37, "state": "OUT", "value": ${action.payload}}`;
       state.mqttClient.client.publish('/raspberrypi-pins/set', msg);
+      state.aquariumSettings.lightStatus = action.payload;
 
       return {
         ...state,
       };
     }
     case 'NEW_MEASUREMENT_MESSAGE': {
+      console.log(action.payload);
       const indLoc = state.locations.findIndex(
         (l) => l.name === action.payload.location
       );
