@@ -2,7 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { AppState } from './types';
 import { Action } from './actions';
 import mqtt from 'mqtt';
-const Switchbot = require('node-switchbot');
+
+//const Switchbot = require('node-switchbot');
 
 const defaultMqttConnectionOptions: mqtt.IClientOptions = {
   //const url = `ws://${host}:${port}/mqtt`;
@@ -28,6 +29,7 @@ const defaultMqttTopics : string [] =[
   '/home/esp8266/temperature',
   '/home/esp8266/humidity',
   '/raspberrypi-pins/get',
+  '/raspiot-client/latest-measurement',
 ];
 
 export const appDataEmpty: AppState = {
@@ -55,6 +57,7 @@ export const appDataEmpty: AppState = {
     scheduledLightOn: null,
     scheduledLightOff: null,
   },
+  postgres: null,
 };
 
 interface AppStateContextProps {

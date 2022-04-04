@@ -16,12 +16,12 @@ export const GetDailyExtremes = (
 
   return {
     min:
-      payload.value < oldMeasurement.minValue
+      payload.value < oldMeasurement.extremes.min
         ? payload.value
-        : oldMeasurement.minValue,
+        : oldMeasurement.extremes.min,
     max:
-      payload.value > oldMeasurement.maxValue
+      payload.value > oldMeasurement.extremes.max
         ? payload.value
-        : oldMeasurement.maxValue,
+        : oldMeasurement.extremes.max,
   };
 };

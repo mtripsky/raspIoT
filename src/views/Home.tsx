@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import '../Weather-icon-animated.css';
-import '../Home-icon.css';
+
 import { MeasurementCard } from '../components/MeasurementCard';
+import { IconMeasurement } from '../components/IconMeasurement';
 import { useAppState } from '../redux/store';
-import { Column, Row } from '../styles';
+import {
+  Column,
+  Row,
+  RowNoFlex,
+  VertivalCenterRow,
+  MeasurementContainer,
+  Title,
+  MeasurementValue,
+  MeasurementCardContainer,
+  MeasurementExtremes,
+  Measurement,
+  Unit,
+  MeasurementDecimal,
+} from '../styles';
+import { roundToOne, getDecimal } from '../utils/Calculator';
 
 const Home = () => {
-  const { state, dispatch} = useAppState();
+  const { state, dispatch } = useAppState();
   const [index, setIndex] = useState(-1);
 
   useEffect(() => {
@@ -25,28 +39,50 @@ const Home = () => {
   },[index]);
 
   return (
-    <Row>
-      <Column>
-        {state.locationCurrentIndex > -1 && state.locationCurrentIndex < state.locations.length 
-          ? (
-            <Carousel interval={10000} indicators={false} nextLabel={null} prevLabel={null}>
-              {state.locations[state.locationCurrentIndex].measurements.map((measurement, i) => (
-                <Carousel.Item>
-                  <MeasurementCard
-                    name={measurement.name}
-                    value={measurement.value}
-                    unit={measurement.unit}
-                    minValue={measurement.minValue}
-                    maxValue={measurement.maxValue}
-                    measurementTime={measurement.time}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>) 
-          : null}
-      </Column>
-    </Row>
+    <MeasurementContainer><VertivalCenterRow>
+      {state.locationCurrentIndex > -1 && state.locationCurrentIndex < state.locations.length  
+        ? state.locations[state.locationCurrentIndex].measurements.map((measurement, i) => (
+          <Row>
+             <Column>
+              <IconMeasurement name={measurement.name.toLowerCase()} />
+            </Column>
+            <Column>
+              <Row>
+                <MeasurementValue>
+                  {Math.floor(measurement.value)}
+                  <Unit>{measurement.unit}</Unit>
+                  <MeasurementDecimal>.{getDecimal(measurement.value)}</MeasurementDecimal>
+                </MeasurementValue>
+              </Row>
+            </Column>
+          </Row>
+        ))
+        : null}
+    </VertivalCenterRow></MeasurementContainer>
   );
+  // return (
+  //   <Row>
+  //     <Column>
+  //       {state.locationCurrentIndex > -1 && state.locationCurrentIndex < state.locations.length 
+  //         ? (
+  //           <Carousel interval={10000} indicators={false} nextLabel={null} prevLabel={null} key={state.locations[state.locationCurrentIndex].id}>
+  //             {state.locations[state.locationCurrentIndex].measurements.map((measurement, i) => (
+  //               <Carousel.Item key={measurement.id}>
+  //                 <MeasurementCard
+  //                   name={measurement.name}
+  //                   value={measurement.value}
+  //                   unit={measurement.unit}
+  //                   minValue={measurement.extremes.min}
+  //                   maxValue={measurement.extremes.max}
+  //                   measurementTime={measurement.time}
+  //                 />
+  //               </Carousel.Item>
+  //             ))}
+  //           </Carousel>) 
+  //         : null}
+  //     </Column>
+  //   </Row>
+  // );
 };
 
 export default Home;

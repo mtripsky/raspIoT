@@ -61,6 +61,7 @@ interface ColumnProps {
 
 interface RowProps {
   align?: string;
+  borderstyle?: string;
 }
 
 export const Column = styled.div<ColumnProps>`
@@ -72,12 +73,24 @@ export const Column = styled.div<ColumnProps>`
 export const Row = styled.div<RowProps>`
   display: flex;
   text-align: ${(props) => (props.align ? props.align : 'center')};
+  border-style: ${(props) => (props.borderstyle ? props.borderstyle : 'none')};
 `;
 
 export const RowNoFlex = styled.div<RowProps>`
   text-align: ${(props) => (props.align ? props.align : 'center')};
 `;
 
+export const MeasurementContainer = styled.div`
+  height: 320px;
+  width: 320px;
+  max-width: 320px;
+`;
+
+export const VertivalCenterRow = styled.div`
+  -ms-transform: translateY(-25%);
+  transform: translateY(25%);
+  text-align: center;
+`;
 
 export const RowClock = styled.div`
   display: flex;

@@ -13,6 +13,10 @@ function createWindow() {
     frame: false,
     roundedCorners: false,
     //fullscreen: true,
+    // webPreferences: {
+    //   nodeIntegration: false, 
+    //   contextIsolation: false,  
+    // }
   });
 
   mainWindow.loadURL(

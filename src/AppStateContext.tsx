@@ -2,7 +2,6 @@ import React, { useReducer, useEffect } from 'react';
 import mqttClient from './mqtt/MqttClient';
 import { AppStateContext, appDataEmpty } from './redux/store';
 import { appStateReducer } from './redux/reducers';
-//import { AdvertisementDataSwitchBot, MeasurementMessage } from './redux/types';
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useReducer(appStateReducer, appDataEmpty);
@@ -29,6 +28,12 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
         if (msg.value) {
           state.aquariumSettings.lightStatus = msg.value;
         }
+      } else if (topic === '/raspiot-client/latest-measurement') {
+        console.log('/raspiot-client/latest-measurement')
+        dispatch({
+          type: 'LATEST_MEASUREMENT_MESSAGE',
+          payload: msg,
+        });
       } else {
         dispatch({
           type: 'NEW_MEASUREMENT_MESSAGE',
@@ -37,48 +42,12 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
       }
     });
     mqttClient.registerCallbackOnDisconnected(() => {});
-    
+
     // to get status of aquarium light at the start
-    const msg = `{"channel": 37}`;
-    state.mqttClient.client.publish('/raspberrypi-pins/get', msg);
-    
-    // state.switchBot.startScan().then(() => {
-    //  // dispatch({type: 'CHANGE_FONT_BACKGROUND_SCHEMA', payload: {textColor: '#ffffff', backgroundColor:'#0f60b6'}});
-
-    //   // Set an event hander
-    //   state.switchBot.onadvertisement = (ad: AdvertisementDataSwitchBot) => {
-    //     dispatch({type: 'CHANGE_FONT_BACKGROUND_SCHEMA', payload:  {textColor: '#2f3c7e', backgroundColor:'#fbeaeb'}})
-
-    //     const t = new Date();
-    //     const temperatureData: MeasurementMessage = {
-    //       device: ad.serviceData.modelName,
-    //       type: 'Temperature',
-    //       value: ad.serviceData.temperature.c,
-    //       unit: '°C',
-    //       location: 'HOME-BEDROOM',
-    //       time: t.toString(),
-    //       timestamp: t.getTime(),
-    //     };
-    //     const humidityData: MeasurementMessage = {
-    //       device: ad.serviceData.modelName,
-    //       type: 'Humidity',
-    //       value: ad.serviceData.humidity,
-    //       unit: '%',
-    //       location: 'HOME-BEDROOM',
-    //       time: t.toString(),
-    //       timestamp: t.getTime(),
-    //     };
-
-    //     dispatch({
-    //       type: 'NEW_MEASUREMENT_MESSAGE',
-    //       payload: temperatureData,
-    //     });
-    //     dispatch({
-    //       type: 'NEW_MEASUREMENT_MESSAGE',
-    //       payload: humidityData,
-    //     });
-    //   };
-    // });
+    const msgPins = `{"channel": 37}`;
+    state.mqttClient.client.publish('/raspberrypi-pins/get', msgPins);
+    state.mqttClient.client.publish('/raspiot-client/get-latest-measurement', `{"type":"temperature", "location":"HOME-LR"}`);
+    state.mqttClient.client.publish('/raspiot-client/get-latest-measurement', `{"type":"humidity", "location":"HOME-LR"}`);
 
     return function cleanup() {
       state.mqttClient.client = mqttClient.disconnect();

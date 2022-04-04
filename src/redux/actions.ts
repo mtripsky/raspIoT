@@ -3,12 +3,17 @@ import {
   Error,
   ColorSchema,
   AdvertisementDataSwitchBot,
+  LastMeasurementMessage,
 } from './types';
 
 export type Action =
   | {
       type: 'NEW_MEASUREMENT_MESSAGE';
       payload: MeasurementMessage;
+    }
+  | {
+      type: 'LATEST_MEASUREMENT_MESSAGE';
+      payload: LastMeasurementMessage;
     }
   | {
       type: 'NEW_MEASUREMENT_SWITCHBOT';

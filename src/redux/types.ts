@@ -1,11 +1,15 @@
 import mqtt from 'mqtt';
 
+export interface DailyExtremes {
+  min: number;
+  max: number;
+}
+
 export interface Measurement {
   id: string;
   name: string;
   value: number;
-  minValue: number;
-  maxValue: number;
+  extremes: DailyExtremes;
   unit: string;
   time: Date;
 }
@@ -56,6 +60,7 @@ export interface AppState {
   currentSettingsView: string;
   fontViewSettings: FontViewSettings;
   aquariumSettings: AquariumSettings;
+  postgres: any;
 }
 
 export interface MeasurementMessage {
@@ -66,6 +71,18 @@ export interface MeasurementMessage {
   location: string;
   time: string;
   timestamp: number;
+}
+
+export interface LastMeasurementMessage {
+  device: string;
+  type: string;
+  value: number;
+  unit: string;
+  location: string;
+  time: string;
+  timestamp: number;
+  min: number;
+  max: number;
 }
 
 export interface Error {

@@ -1,17 +1,15 @@
 import mqtt from 'mqtt';
 
-interface ConnectFce {
-  (
-    options: mqtt.IClientOptions,
-    callback: OnConnectedCallback
-  ): mqtt.MqttClient | null;
-}
+type ConnectFce = (
+  options: mqtt.IClientOptions,
+  callback: OnConnectedCallback
+) => mqtt.MqttClient | null;
+
 interface DisconectFce {
   (): mqtt.MqttClient | null;
 }
 interface SubscribeFce {
-  (
-    topic: string | string[],
+  ( topic: string | string[],
     options: mqtt.IClientPublishOptions | undefined
   ): void;
 }

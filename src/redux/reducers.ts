@@ -114,44 +114,54 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
       };
     }
-    case 'NEW_MEASUREMENT_MESSAGE': {
-      console.log(action.payload);
-      const indLoc = state.locations.findIndex(
+    case 'LATEST_MEASUREMENT_MESSAGE': {
+      let indLoc = state.locations.findIndex(
         (l) => l.name === action.payload.location
       );
 
       if (indLoc === -1) {
-        // new location
         state.locations.push({
           id: uuid(),
           name: action.payload.location,
           measurements: [],
         });
-        state.locations[state.locations.length - 1].measurements.push({
+        indLoc = state.locations.length - 1;
+        state.locationCurrentIndex = indLoc;
+      }
+      
+      const indMeasurement = state.locations[indLoc].measurements.findIndex(
+        (m) => m.name.toLowerCase() === action.payload.type.toLowerCase()
+      );
+
+      if (indMeasurement === -1) {
+        state.locations[indLoc].measurements.push({
           id: uuid(),
           name: action.payload.type,
           value: action.payload.value,
           unit: action.payload.unit,
-          minValue: action.payload.value,
-          maxValue: action.payload.value,
+          extremes: {
+            min: action.payload.min,
+            max: action.payload.max,
+          },
           time: new Date(action.payload.time),
         });
-      } else {
+      }
+
+      return {
+        ...state,
+      };
+    }
+    case 'NEW_MEASUREMENT_MESSAGE': {
+      const indLoc = state.locations.findIndex(
+        (l) => l.name === action.payload.location
+      );
+
+      if (indLoc !== -1) {
         const indMeasurement = state.locations[indLoc].measurements.findIndex(
-          (m) => m.name === action.payload.type
+          (m) => m.name.toLowerCase() === action.payload.type.toLowerCase()
         );
 
-        if (indMeasurement === -1) {
-          state.locations[indLoc].measurements.push({
-            id: uuid(),
-            name: action.payload.type,
-            value: action.payload.value,
-            unit: action.payload.unit,
-            minValue: action.payload.value,
-            maxValue: action.payload.value,
-            time: new Date(action.payload.time),
-          });
-        } else {
+        if (indMeasurement !== -1) {
           const dailyExtremes = GetDailyExtremes(
             state.locations[indLoc].measurements[indMeasurement],
             action.payload
@@ -162,9 +172,9 @@ export const appStateReducer = (state: AppState, action: Action): AppState => {
           );
           state.locations[indLoc].measurements[indMeasurement].value =
             action.payload.value;
-          state.locations[indLoc].measurements[indMeasurement].minValue =
+          state.locations[indLoc].measurements[indMeasurement].extremes.min =
             dailyExtremes.min;
-          state.locations[indLoc].measurements[indMeasurement].maxValue =
+          state.locations[indLoc].measurements[indMeasurement].extremes.max =
             dailyExtremes.max;
         }
       }
