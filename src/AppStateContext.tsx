@@ -29,7 +29,6 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
           state.aquariumSettings.lightStatus = msg.value;
         }
       } else if (topic === '/raspiot-client/latest-measurement') {
-        console.log('/raspiot-client/latest-measurement')
         dispatch({
           type: 'LATEST_MEASUREMENT_MESSAGE',
           payload: msg,
